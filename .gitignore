@@ -1,0 +1,8 @@
+node_modules/
+.vscode/
+dist/
+.prettierrc
+config.env
+public/images/product
+public/images/profile/profile-653791dd7931cdf7fea5f85b-1698141430895.jpg
+public/images/profile/profile-653791dd7931cdf7fea5f85b-1698141467514.jpg
