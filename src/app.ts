@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import productRouter from './routes/productRoutes'
 import authRouter from './routes/authRoutes'
 import reviewRouter from './routes/reviewRoutes'
+import orderRouter from './routes/orderRoutes'
 import GlobalErrorHandler from './utils/GlobalErrorHandler'
 
 const app = express()
@@ -29,6 +30,7 @@ if (process.env.NODE_ENV?.trim() === 'development') app.use(morgan('dev'))
 app.use('/api/v1/products', productRouter)
 app.use('/api/v1/users', authRouter)
 app.use('/api/v1/reviews', reviewRouter)
+app.use('/api/v1/orders', orderRouter)
 
 app.use(GlobalErrorHandler)
 export default app

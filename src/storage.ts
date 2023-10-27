@@ -1,5 +1,8 @@
 import multer from 'multer'
+import sharp from 'sharp'
+import { Request, Response, NextFunction } from 'express'
 import { RequestInterface } from './models/interfaces/RequestInterface'
+import CatchAsync from './utils/CatchAsync'
 
 export const productImagesStorage = multer.diskStorage({
     destination: function (request, file, cb) {
@@ -30,3 +33,21 @@ export const profileImagesStorage = multer.diskStorage({
         cb(null, fileName)
     },
 })
+
+export const resizeImage = CatchAsync(
+    async (request: Request, response: Response, next: NextFunction) => {
+        const files: any = request.files
+        files.forEach(async (file: any) => {
+            const buffer = await sharp(`${file.path}`).toBuffer()
+
+            sharp(buffer)
+                .resize({
+                    width: 500,
+                    height: 400,
+                    fit: 'fill',
+                })
+                .toFile(`${file.path}`)
+        })
+        next()
+    }
+)
