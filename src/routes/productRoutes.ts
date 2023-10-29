@@ -25,7 +25,11 @@ router.post(
 
 router
     .route('/:id')
-    .patch(upload.array('product-image'), productController.updateProduct)
+    .patch(
+        upload.array('product-image', 5),
+        resizeImage,
+        productController.updateProduct
+    )
     .delete(productController.deleteProduct)
 
 export default router
