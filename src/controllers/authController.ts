@@ -28,18 +28,26 @@ function sendToken(user: UserInterface, response: Response) {
     )
 
     const decode: any = jwt.verify(token, `${process.env.JWT_SECRET_KEY}`)
-    console.log(decode)
-    return response.status(200).json({
-        status: 'success',
-        jwt: token,
-        jwtExpiresIn: decode.exp * 1000,
-        user: {
-            name: user.name,
-            email: user.email,
-            image: user.image,
-            role: user.role,
-        },
-    })
+
+    return response
+        .cookie('jwt', token, {
+            expires: new Date(
+                Date.now() +
+                    Number(process.env.JWT_EXPIRES_IN) * 24 * 60 * 60 * 1000
+            ),
+        })
+        .status(200)
+        .json({
+            status: 'success',
+            jwt: token,
+            jwtExpiresIn: decode.exp * 1000,
+            user: {
+                name: user.name,
+                email: user.email,
+                image: user.image,
+                role: user.role,
+            },
+        })
 }
 
 export const signup = CatchAsync(
