@@ -46,5 +46,4 @@ npm run start
 [Blaze Baslet API Documention](https://documenter.getpostman.com/view/13135527/2s9YkgDkFJ)
 
 ## License
-Prashant Sehgal
 **Free & OpenSource Software**
