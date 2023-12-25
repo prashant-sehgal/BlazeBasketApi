@@ -39,8 +39,6 @@ function sendToken(user: UserInterface, response: Response) {
         .status(200)
         .json({
             status: 'success',
-            jwt: token,
-            jwtExpiresIn: decode.exp * 1000,
             user: {
                 name: user.name,
                 email: user.email,
