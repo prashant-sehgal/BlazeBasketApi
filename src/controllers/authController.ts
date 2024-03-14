@@ -35,19 +35,20 @@ function sendToken(user: UserInterface, response: Response) {
     const authString = `${token},${decode.exp * 1000}`
     const encryptedAuthString = encrypt(authString, `${process.env.ENC_KEY}`)
 
-    return response.status(200).json({
-        status: 'success',
-
-        user: {
-            name: user.name,
-            email: user.email,
-            image: user.image,
-            role: user.role,
-        },
-        authString: encryptedAuthString.data,
-
-        random: encryptedAuthString.iv,
-    })
+    return response
+        .cookie('jwt', token)
+        .status(200)
+        .json({
+            status: 'success',
+            user: {
+                name: user.name,
+                email: user.email,
+                image: user.image,
+                role: user.role,
+            },
+            authString: encryptedAuthString.data,
+            random: encryptedAuthString.iv,
+        })
 }
 
 export const signup = CatchAsync(
