@@ -9,7 +9,7 @@
         "watch": "tsc -w"
     },
     "keywords": [],
-    "author": "",
+    "author": "Prashant Sehgal",
     "license": "ISC",
     "dependencies": {
         "cookie-parser": "^1.4.6",
