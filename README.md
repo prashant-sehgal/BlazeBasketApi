@@ -1,6 +1,6 @@
 # Blaze Basket API
 
-An Ecommorce Backend service api build with node.js- express.js framwork.
+A restfull backend server api for cross-platform blazebasket website and app.
 
 ## Features
 
