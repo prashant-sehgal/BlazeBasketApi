@@ -19,7 +19,6 @@ router.use(authorizedTo('admin'))
 router.post(
     '/',
     upload.array('product-image', 5),
-    resizeImage,
     productController.createNewProduct
 )
 
