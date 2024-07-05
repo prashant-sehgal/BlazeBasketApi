@@ -30,7 +30,6 @@ const server = app.listen(process.env.PORT, () => {
 })
 
 process.on('unhandledRejection', async function (error: any) {
-    console.log('inside')
     await sendEmail(
         `${process.env.ADMIN_EMAIL}`,
         '⚠ Uncaught Rejection in BlazeBasket api',
