@@ -27,6 +27,11 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'product must have a price'],
     },
+    category: {
+        type: String,
+        enum: ['laptop', 'smartphone', 'smartwatch', 'headphone', 'speakers'],
+        required: true,
+    },
     ratingsAverage: {
         type: Number,
         max: [5.0, 'ratings must be equal or below 5.0'],
