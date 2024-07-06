@@ -29,7 +29,7 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['laptop', 'smartphone', 'smartwatch', 'headphone', 'speakers'],
+        enum: ['laptop', 'smartphone', 'smartwatch', 'headphone', 'speaker'],
         required: true,
     },
     ratingsAverage: {
