@@ -5,12 +5,15 @@ import {
     createNewReview,
     createReviewObject,
     deleteReview,
+    filterProductReviews,
     getAllReviews,
     getReview,
     updateReview,
 } from '../controllers/reviewController'
 
 const router = Router()
+
+router.route('/product/:id').get(filterProductReviews, getAllReviews)
 
 router.use(authenticate)
 

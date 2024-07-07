@@ -11,6 +11,16 @@ import {
 import { RequestInterface } from '../models/interfaces/RequestInterface'
 import User from '../models/userModel'
 
+// product reviews filter middleware
+export function filterProductReviews(
+    request: Request,
+    response: Response,
+    next: NextFunction
+) {
+    request.query = { product: request.params.id }
+    next()
+}
+
 export const createReviewObject = CatchAsync(
     async (
         request: RequestInterface,
