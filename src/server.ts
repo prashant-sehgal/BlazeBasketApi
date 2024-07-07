@@ -9,7 +9,7 @@ import { sendEmail } from './utils/Email'
 process.on('uncaughtException', async (error) => {
     await sendEmail(
         `${process.env.ADMIN_EMAIL}`,
-        'Uncaught Exception in BlazeBasket api',
+        '🔴 Uncaught Exception in BlazeBasket api',
         `
         Error Name: ${error.name}<br>
         Error Message: ${error.message}<br>
@@ -32,7 +32,7 @@ const server = app.listen(process.env.PORT, () => {
 process.on('unhandledRejection', async function (error: any) {
     await sendEmail(
         `${process.env.ADMIN_EMAIL}`,
-        '⚠ Uncaught Rejection in BlazeBasket api',
+        '🟠 Uncaught Rejection in BlazeBasket api',
         `
         Error Name: ${error.name}<br>
         Error Message: ${error.message}<br>

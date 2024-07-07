@@ -40,8 +40,8 @@ const sendErrorProd = (error: any, response: Response) => {
         })
     } else {
         sendEmail(
-            'prashantsehgal.95790@gmail.com',
-            '(BlazeBasket) Something went very wrong',
+            `${process.env.ADMIN_EMAIL}`,
+            '🟡 (BlazeBasket) Something went very wrong',
             `${JSON.stringify(error)} ${JSON.stringify(error.stack)}`
         )
         response.status(500).json({
