@@ -9,7 +9,7 @@ export const searchFromKeywords = (Model: any, fields: string[]) =>
             let keywords = request.params.query.split(' ')
             keywords = keywords.filter((val) => val !== '')
             keywords = keywords.map((keyword) => keyword.toLocaleLowerCase())
-            console.log(keywords)
+
             const documents = await Model.find()
 
             const searchResult = documents.map((document: any, i: any) => {
