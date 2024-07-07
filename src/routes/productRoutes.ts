@@ -11,6 +11,7 @@ const router = Router()
 // open routes
 router.get('/', productController.getAllProducts)
 router.get('/:id', productController.getProduct)
+router.get('/search/:query', productController.searchAllProducts)
 
 // authencticated and restricted routes for admin
 router.use(authenticate)

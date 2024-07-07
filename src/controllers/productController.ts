@@ -6,10 +6,15 @@ import {
     createOne,
     updateOne,
     deleteOne,
+    searchFromKeywords,
 } from '../utils/RESTHandler'
 
 export const getAllProducts = getAll(Product)
 export const createNewProduct = createOne(Product)
+export const searchAllProducts = searchFromKeywords(Product, [
+    'title',
+    'description',
+])
 // export const createNewProduct = async function (
 //     req: Request,
 //     response: Response,

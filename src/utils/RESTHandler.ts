@@ -3,6 +3,49 @@ import APIFeatures from './APIFeatures'
 import AppError from './AppError'
 import CatchAsync from './CatchAsync'
 
+export const searchFromKeywords = (Model: any, fields: string[]) =>
+    CatchAsync(
+        async (request: Request, response: Response, next: NextFunction) => {
+            const keywords = request.params.query.split(' ')
+            const documents = await Model.find()
+
+            const searchResult = documents.map((document: any, i: any) => {
+                const fieldsForSearch = fields.map((field) =>
+                    document[field].toLowerCase()
+                )
+
+                let result = false
+                keywords.forEach((keyword) => {
+                    fieldsForSearch.forEach((field) => {
+                        if (field.includes(keyword)) {
+                            result = true
+                        }
+                    })
+                })
+
+                if (result) return document
+            })
+
+            const filteredArr = searchResult.filter(
+                (el: any) => el !== undefined
+            )
+
+            if (!filteredArr)
+                return next(
+                    new AppError(
+                        'No document exists with that search keyword',
+                        404
+                    )
+                )
+
+            return response.json({
+                status: 'success',
+                length: filteredArr.length,
+                data: { products: filteredArr },
+            })
+        }
+    )
+
 export const getAll = (Model: any) =>
     CatchAsync(
         async (
