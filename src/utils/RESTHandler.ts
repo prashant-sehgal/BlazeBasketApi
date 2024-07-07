@@ -6,7 +6,10 @@ import CatchAsync from './CatchAsync'
 export const searchFromKeywords = (Model: any, fields: string[]) =>
     CatchAsync(
         async (request: Request, response: Response, next: NextFunction) => {
-            const keywords = request.params.query.split(' ')
+            let keywords = request.params.query.split(' ')
+            keywords = keywords.filter((val) => val !== '')
+            keywords = keywords.map((keyword) => keyword.toLocaleLowerCase())
+            console.log(keywords)
             const documents = await Model.find()
 
             const searchResult = documents.map((document: any, i: any) => {
