@@ -153,6 +153,7 @@ export const authenticate = CatchAsync(async function (
     const jwtToken =
         request.cookies.jwt ||
         request.body.jwt ||
+        request.body.appId ||
         request.headers['authorization']?.split(' ')[1]
 
     if (!jwtToken)
@@ -163,24 +164,33 @@ export const authenticate = CatchAsync(async function (
             )
         )
 
-    const decode: any = jwt.verify(jwtToken, `${process.env.JWT_SECRET_KEY}`)
-
-    const user = await User.findById(decode.id)
-
-    if (!user) return next(new AppError('user no longer exists', 401))
-
-    if (user.changePasswordAfter(decode.iat)) {
-        return next(
-            new AppError(
-                'User recently changed password! Please log in again.',
-                401
-            )
+    if (jwtToken === process.env.APPLICATION_ID) {
+        console.log('in')
+        request.uid = 'application'
+        next()
+    } else {
+        const decode: any = jwt.verify(
+            jwtToken,
+            `${process.env.JWT_SECRET_KEY}`
         )
-    }
 
-    // grant access
-    request.user = user
-    next()
+        const user = await User.findById(decode.id)
+
+        if (!user) return next(new AppError('user no longer exists', 401))
+
+        if (user.changePasswordAfter(decode.iat)) {
+            return next(
+                new AppError(
+                    'User recently changed password! Please log in again.',
+                    401
+                )
+            )
+        }
+
+        // grant access
+        request.user = user
+        next()
+    }
 })
 
 export function authorizedTo(...roles: string[]): any {
@@ -189,14 +199,18 @@ export function authorizedTo(...roles: string[]): any {
         response: Response,
         next: NextFunction
     ) {
-        if (!roles.includes(request.user.role))
-            return next(
-                new AppError(
-                    'you are not authorized to preform this action',
-                    401
+        if (request.uid === 'application') {
+            next()
+        } else {
+            if (!roles.includes(request.user.role))
+                return next(
+                    new AppError(
+                        'you are not authorized to preform this action',
+                        401
+                    )
                 )
-            )
 
-        next()
+            next()
+        }
     }
 }
