@@ -165,7 +165,6 @@ export const authenticate = CatchAsync(async function (
         )
 
     if (jwtToken === process.env.APPLICATION_ID) {
-        console.log('in')
         request.uid = 'application'
         next()
     } else {
