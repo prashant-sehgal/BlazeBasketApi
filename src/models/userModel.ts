@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, 'user mush have an email address'],
+        required: [true, 'user must have an email address'],
         unique: true,
     },
     password: {
