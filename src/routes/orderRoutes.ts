@@ -11,7 +11,7 @@ router.get('/success', orderController.checkoutSuccess)
 router.use(authenticate)
 
 router.post('/checkout', orderController.createOrderCheckOutSession)
-router.get(
+router.post(
     '/getMyOrders',
     orderController.getMyOrders,
     orderController.getAllOrders

@@ -47,10 +47,7 @@ export const checkoutSuccess = CatchAsync(
         order.paymentIntentId = `${session.payment_intent}`
         await order.save({ validateBeforeSave: false })
 
-        return response.status(200).json({
-            status: 'order is created successfully',
-            orderID: order?.id,
-        })
+        return response.redirect(`${process.env.HOST}/orders`)
     }
 )
 
@@ -101,7 +98,9 @@ export const createOrderCheckOutSession = CatchAsync(
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-            success_url: `${process.env.HOST}/orders`,
+            success_url: `${request.protocol}://${request.get(
+                'host'
+            )}/api/v1/orders/success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.HOST}/cart`,
             customer_email: request.user.email,
             line_items,
