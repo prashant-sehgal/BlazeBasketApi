@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import Stripe from 'stripe'
 import CatchAsync from '../utils/CatchAsync'
 import { RequestInterface } from '../models/interfaces/RequestInterface'
@@ -16,6 +16,15 @@ import {
 interface ProductFieldInterface {
     id: string
     quantity: number
+}
+
+export function completeOrderMiddleware(
+    request: Request,
+    response: Response,
+    next: NextFunction
+) {
+    request.body = { completed: true }
+    next()
 }
 
 function limitString(message: string, words: number) {

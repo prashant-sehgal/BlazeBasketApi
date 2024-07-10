@@ -16,6 +16,11 @@ router.post(
     orderController.getMyOrders,
     orderController.getAllOrders
 )
+router.post(
+    '/completeMyOrder/:id',
+    orderController.completeOrderMiddleware,
+    orderController.updateOrder
+)
 
 // restricted routes
 router.use(authorizedTo('admin'))
