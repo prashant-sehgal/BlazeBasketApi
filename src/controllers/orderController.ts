@@ -62,7 +62,7 @@ export const createOrderCheckOutSession = CatchAsync(
     ) => {
         const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] =
             await Promise.all(
-                request.body.map(
+                request.body.products.map(
                     async (productField: ProductFieldInterface) => {
                         const product = await Product.findById(productField.id)
                         if (!product)
@@ -101,10 +101,8 @@ export const createOrderCheckOutSession = CatchAsync(
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-            success_url: `${request.protocol}://${request.get(
-                'host'
-            )}/api/v1/orders/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: 'https://www.google.com',
+            success_url: `${process.env.HOST}/orders`,
+            cancel_url: `${process.env.HOST}/cart`,
             customer_email: request.user.email,
             line_items,
         })
@@ -116,7 +114,7 @@ export const createOrderCheckOutSession = CatchAsync(
         if (session.id)
             await Order.create({
                 user: request.user.id,
-                products: request.body.map(
+                products: request.body.products.map(
                     (productField: ProductFieldInterface) => {
                         return {
                             product: productField.id,
