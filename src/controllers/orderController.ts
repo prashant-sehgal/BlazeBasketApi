@@ -93,7 +93,7 @@ export const createOrderCheckOutSession = CatchAsync(
                                     images: [
                                         `${request.protocol}://${request.get(
                                             'host'
-                                        )}/public/images/product/${
+                                        )}/public/images/products/${
                                             product.images[0]
                                         }`,
                                     ],
