@@ -107,6 +107,7 @@ export const createOrderCheckOutSession = CatchAsync(
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
+            billing_address_collection: 'required',
             success_url: `${request.protocol}://${request.get(
                 'host'
             )}/api/v1/orders/success?session_id={CHECKOUT_SESSION_ID}`,
